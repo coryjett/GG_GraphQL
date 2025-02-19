@@ -61,6 +61,8 @@ source ~/.zshrc
 
 #### Deploy Hasura
 
+Update the Postgres password under `HASURA_GRAPHQL_DATABASE_URL` in the YAML block block below before running
+
 ```
 kubectl apply -f- <<EOF
 apiVersion: apps/v1
@@ -88,7 +90,7 @@ spec:
         name: hasura
         env:
         - name: HASURA_GRAPHQL_DATABASE_URL
-          value: postgres://postgres:7lVcwgYvRI@psql-test-postgresql:5432/postgres
+          value: postgres://postgres:PASSWORD@psql-test-postgresql:5432/postgres
         ## enable the console served by server
         - name: HASURA_GRAPHQL_ENABLE_CONSOLE
           value: "true"
