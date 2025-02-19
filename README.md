@@ -63,7 +63,7 @@ source ~/.zshrc
 
 #### Deploy Hasura
 
-Update the Postgres password under `HASURA_GRAPHQL_DATABASE_URL` in the YAML block block below before running
+Update the Postgres password under `HASURA_GRAPHQL_DATABASE_URL` in the YAML block below before running
 
 ```
 kubectl apply -f- <<EOF
