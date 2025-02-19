@@ -242,3 +242,5 @@ curl 'http://localhost:8080/v1/graphql' \
 https://phoenixnap.com/kb/postgresql-kubernetes
 
 https://hasura.io/docs/2.0/deployment/deployment-guides/kubernetes/
+
+https://docs.solo.io/gateway/latest/quickstart/
