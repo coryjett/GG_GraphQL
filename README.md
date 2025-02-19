@@ -1,4 +1,4 @@
-![trafficflow](/images/flow.png)
+![trafficflow](/images/flow.png | width=100)
 
 ### Add the bitnami helm chart
 
