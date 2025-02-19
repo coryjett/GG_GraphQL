@@ -140,14 +140,22 @@ http://localhost:8000/console
 
 Add Data to Hasura: [tutorial](https://www.youtube.com/watch?v=ZGKQ0U18USU&t=5s&ab_channel=Hasura)
 
-Get all posts: http://localhost:8000/api/rest/posts
+Get all posts:
+
+```
+curl 'http://localhost:8000/v1/graphql' \
+  -X POST \
+  -H 'content-type: application/json' \
+  --data '{
+    "query": "{ posts { created_at id title updated_at } }"
+  }' | jq
+  ```
 
 ### Install Gloo Gateway
 
 `kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.2.0/standard-install.yaml`
 
 `helm repo add gloo https://storage.googleapis.com/solo-public-helm`
-`helm repo update`
 
 `helm repo update`
 
@@ -218,7 +226,16 @@ EOF
 
 http://localhost:8080/console
 
-http://localhost:8080/api/rest/posts
+Get all posts (through Gloo Gateway):
+
+```
+curl 'http://localhost:8080/v1/graphql' \
+  -X POST \
+  -H 'content-type: application/json' \
+  --data '{
+    "query": "{ posts { created_at id title updated_at } }"
+  }' | jq
+  ```
 
 ### Links
 
