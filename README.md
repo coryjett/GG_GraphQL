@@ -1,4 +1,4 @@
-<img src="/images/flow.png" width="100">
+<img src="/images/flow.png" width="250">
 
 ### Add the bitnami helm chart
 
