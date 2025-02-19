@@ -242,5 +242,3 @@ curl 'http://localhost:8080/v1/graphql' \
 https://phoenixnap.com/kb/postgresql-kubernetes
 
 https://hasura.io/docs/2.0/deployment/deployment-guides/kubernetes/
-
-https://github.com/hasura/graphql-engine/tree/stable/install-manifests/kubernetes
