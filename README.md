@@ -1,3 +1,5 @@
+![trafficflow](/images/flow.png)
+
 ### Add the bitnami helm chart
 
 `helm repo add bitnami https://charts.bitnami.com/bitnami`
