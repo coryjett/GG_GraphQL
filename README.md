@@ -1,5 +1,9 @@
 <img src="/images/flow.png" width="250">
 
+### Create a Kubernetes cluster
+
+kind create cluster
+
 ### Add the bitnami helm chart
 
 `helm repo add bitnami https://charts.bitnami.com/bitnami`
@@ -153,30 +157,11 @@ curl 'http://localhost:8000/v1/graphql' \
   }' | jq
   ```
 
-### Install Gloo Gateway
+### Deploy kgateway
 
-`kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.2.0/standard-install.yaml`
+`kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.2.1/standard-install.yaml`
 
-`helm repo add gloo https://storage.googleapis.com/solo-public-helm`
-
-`helm repo update`
-
-```
-helm install -n gloo-system gloo gloo/gloo \
---create-namespace \
---version 1.18.8 \
--f -<<EOF
-discovery:
-  enabled: false
-gatewayProxies:
-  gatewayProxy:
-    disabled: true
-gloo:
-  disableLeaderElection: true
-kubeGateway:
-  enabled: true
-EOF
-```
+`helm install --create-namespace --namespace kgateway-system --version v2.0.0-main kgateway oci://ghcr.io/kgateway-dev/charts/kgateway`
 
 ### Create a Gateway and test
 
@@ -187,10 +172,10 @@ kubectl apply -f- <<EOF
 kind: Gateway
 apiVersion: gateway.networking.k8s.io/v1
 metadata:
-  name: graphql
+  name: graphql-gw
   namespace: default
 spec:
-  gatewayClassName: gloo-gateway
+  gatewayClassName: kgateway
   listeners:
   - protocol: HTTP
     port: 8080
@@ -205,11 +190,11 @@ kubectl apply -f- <<EOF
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
-  name: graphql
+  name: graphql-route
   namespace: default
 spec:
   parentRefs:
-    - name: graphql
+    - name: graphql-gw
       namespace: default
   rules:
     - matches:
@@ -222,13 +207,13 @@ spec:
 EOF
 ```
 
-#### Test connectivity through Gloo Gateway
+#### Test connectivity through the gateway
 
-`kubectl port-forward deployment/gloo-proxy-graphql 8080:8080`
+`kubectl port-forward deployment/graphql-gw 8080:8080`
 
 http://localhost:8080/console
 
-Get all posts (through Gloo Gateway):
+Get all posts (through kgateway):
 
 ```
 curl 'http://localhost:8080/v1/graphql' \
@@ -245,4 +230,4 @@ https://phoenixnap.com/kb/postgresql-kubernetes
 
 https://hasura.io/docs/2.0/deployment/deployment-guides/kubernetes/
 
-https://docs.solo.io/gateway/latest/quickstart/
+https://kgateway.dev/docs/quickstart/
