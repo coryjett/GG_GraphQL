@@ -2,7 +2,7 @@
 
 ### Create a Kubernetes cluster
 
-kind create cluster
+`kind create cluster`
 
 ### Add the bitnami helm chart
 
@@ -223,6 +223,10 @@ curl 'http://localhost:8080/v1/graphql' \
     "query": "{ posts { created_at id title updated_at } }"
   }' | jq
   ```
+
+### Cleanup
+
+`kind delete cluster`
 
 ### Links
 
