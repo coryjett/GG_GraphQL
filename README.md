@@ -157,6 +157,21 @@ curl 'http://localhost:8000/v1/graphql' \
   }' | jq
   ```
 
+Add the Starlink GraphQL remote schema and test:
+
+Navigate to http://localhost:8000/console/remote-schemas/manage/schemas
+
+Add `https://spacex-production.up.railway.app/`
+
+```
+curl 'http://localhost:8000/v1/graphql' \
+  -X POST \
+  -H 'content-type: application/json' \
+  --data '{
+    "query": "{ launches { launch_date_local mission_name rocket { rocket_name } } }"
+  }' | jq
+```
+
 ### Deploy kgateway
 
 `kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.2.1/standard-install.yaml`
@@ -223,6 +238,16 @@ curl 'http://localhost:8080/v1/graphql' \
     "query": "{ posts { created_at id title updated_at } }"
   }' | jq
   ```
+
+Test the Starlink remote GraphQL endpoint:
+
+```curl 'http://localhost:8000/v1/graphql' \
+  -X POST \
+  -H 'content-type: application/json' \
+  --data '{
+    "query": "{ launches { launch_date_local mission_name rocket { rocket_name } } }"
+  }' | jq
+```
 
 ### Cleanup
 
